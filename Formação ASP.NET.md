@@ -1,4 +1,4 @@
-# Protocolo HTTP
+## Protocolo HTTP
 - Protocolo base para a comunicação de dados na internet, permitindo obter recursos como páginas HTML.
 - Quando desenvolvemos uma API, permitindo o acesso aos seus recursos geralmente através do protocolo HTTP.
 Os cabeçalhos de requisição HTTP, tanto de envio quanto de respostas, permitem o envio de informações extras.
@@ -80,31 +80,32 @@ dotnet run
 ```
 
 ## Controllers e Actions
-Controllers
+### Controllers
 São componentes que definem e agrupam um conjunto de ações (Actions)
 Agrupam ações de maneira lógica, baseado no recurso a ser tratado e/ou acessado
 Um Controller em uma API ASP.NET Core é uma classe que herda de ControllerBase
 Uma informação importante para uma Controller é a rota base para ela, já que isso influenciará na rota de todos pontos de acesso desse Controller. Ela pode ser definida pela anotação Route
-Actions
+
+### Actions
 São métodos contidos em uma classe Controller, e representam pontos de acesso em uma API
 Para API’s, o tipo de retorno de uma Action geralmente é IActionResult, que é uma interface implementada pelas respostas padrão do HTTP, como o Ok, Not Found, entre outras.
 
-Utilizando o Swagger
-Ferramenta que simplifica o desenvolvimento de API’s, permitindo, entre outras funcionalidades, a documentar e testar API’s
-Ele consegue gerar uma interface gráfica contendo todos os pontos de acesso (endpoints) da API, permitindo realizar requisições diretamente em sua interface
+## Utilizando o Swagger
+- Ferramenta que simplifica o desenvolvimento de API’s, permitindo, entre outras funcionalidades, a documentar e testar API’s
+- Ele consegue gerar uma interface gráfica contendo todos os pontos de acesso (endpoints) da API, permitindo realizar requisições diretamente em sua interface
 
-Aprofundando em Actions
+## Aprofundando em Actions
 O ASP.NET Core é bem flexível a respeito de definição de Actions e Rotas, além de recepção de parâmetros. Para uma requisição GET, por exemplo, geralmente você vai receber:
-Parâmetro de URL
-Query String
+- Parâmetro de URL
+- Query String
+
 Já no caso de requisição POST e PUT, geralmente vão ser recebidos parâmetros através de:
-Parâmetro de URL
-Corpo da requisição
+- Parâmetro de URL
+- Corpo da requisição
+
 Finalmente, as requisições DELETE geralmente apenas recebem parâmetros de URL
 
- 
- 
- 
+```c# 
 using DevFreela.API.Models;
 using Microsoft.AspNetCore.Mvc;
  
@@ -159,44 +160,31 @@ namespace DevFreela.API.Controllers
        }
    }
 }
-
-Models
-namespace DevFreela.API.Models
-{
-   public class CreateProjectModel
-   {
-       public int Id { get; set; }
-       public string Title { get; set; }
-       public string Description { get; set; }
-   }
-}
-namespace DevFreela.API.Models
-{
-   public class UpdateProjectModel
-   {
-       public string Description { get; set; }
-   }
-}
+```
  
-Configurações
+## Configurações
 O ASP.NET Core permite carregar configurações de aplicação de uma série de fontes, através da interface IConfiguration, como:
-Arquivos de configuração, como o appsettings.json;
-Variáveis de Ambiente;
-Argumentos de linha de comando;
-Da nuvem Azure, como configurações de Aplicativo, e pelo Azure Key Vault.
+- Arquivos de configuração, como o appsettings.json;
+- Variáveis de Ambiente;
+- Argumentos de linha de comando;
+- Da nuvem Azure, como configurações de Aplicativo, e pelo Azure Key Vault.
 
 No caso de arquivo de configuração, é possível carregar diferentes versões dele, dependendo do ambiente que é definido pela variável de ambiente ASPNETCORE_ENVIRONMENT, por exemplo:
-appsettings.Development.json;
-appsettings.Staging.json;
-appsettings.Production.json
+- appsettings.Development.json;
+- appsettings.Staging.json;
+- appsettings.Production.json
 
-Uma ótima maneira de obter configurações é usar o padrão Option. 
-Já no caso de linha de comando, basta passar como simples parâmetros, como em dotnet run nome=Luis e utilizar o código Configuration.GetValue,T.(“nome_parametro”)
+- Uma ótima maneira de obter configurações é usar o padrão Option. 
+- Já no caso de linha de comando, basta passar como simples parâmetros, como em dotnet run nome=Luis e utilizar o código Configuration.GetValue,T.(“nome_parametro”)
 
-Injeção de Dependência
+## Injeção de Dependência
 Técnica que permite a inserção de um objeto em outro, geralmente através do construtor, criando a relação de dependência.
+
 O método que utilizamos para adicionar configurações para o Controller é um exemplo de injeção de Dependência.
+
 Técnica muito utilizada para melhorar a qualidade de código em refatoração, e torná-lo testável.
-Singleton: uma instância por aplicação
-Scoped: uma instância por requisição
-Transient: uma instância por classe
+
+Cada um deles define o ciclo de vida do objeto
+  - **Singleton:** uma instância por aplicação
+  - **Scoped:** uma instância por requisição
+  - **Transient:** uma instância por classe
