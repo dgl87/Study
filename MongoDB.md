@@ -114,34 +114,84 @@ Próximos 5 bytes: valor aleatório
 # CRUD
 https://www.mongodb.com/docs/manual/crud/
 
-## C
+## C - CREATED
+![image](https://user-images.githubusercontent.com/58392536/212552345-03307971-200d-47bc-ab25-5d49e561a032.png)
+
+Descontinuado
 ```
 - insert({})
   db.crud.insert({a: 123})
-  
+```
+Insere um objeto
+```  
 - insertOne({})
   db.crud.insertOne({a: 123})
-  
+```
+Insere vários objetos
+```
 - insertMany({}, {}, {})
   db.crud.insertMany([{a: 123},{b: 456}, {c: 789}])
-  
-  db.crud.insertMany([{a: 123},{b: 456}, {c: 789}], {ordered: false}) //Insere mesmo se der erro
 ```
-## R
+ordered: true = padrão. Insere SE nenhum elemento da lista der erro
+```  
+- db.testInsertMany.insertMany([{_id: 2}, {_id: 7, msg: 'test'}], {ordered: true}) //Insere a lista se não houver erro em nenhum objeto
 ```
-- find({})
-- findOne({})
-- find({}).pretty()
+ordered: false = Insere elementos, exceto o objeto com erro
 ```
-## U
+- db.crud.insertMany([{a: 123},{b: 456}, {c: 789}], {ordered: false}) //Insere lista exceto o que deu erro
 ```
-- update
-- updateOne
-- updateMany
-```
-## D
-```
-- deleteOne
-- deleteMany
-```
+## R - READ
+![image](https://user-images.githubusercontent.com/58392536/212552414-1841fee7-cddb-48c3-922e-5d72e111f222.png)
 
+```
+find({})
+```
+```
+findOne({})
+```
+```
+find({}).pretty()
+```
+Encontra elementos com valor b: 456
+```
+db.crud.find({ b: 456})
+```
+Encontra objetos que possuem c
+```
+db.crud.find({ c: {$exists: true}})
+```
+Encontra objetos que não possuem c
+```
+db.crud.find({ c: {$exists: false}})
+```
+``` Traz somente campos nome e materias. SQL = SELECT nome, materias FROM alunos
+db.alunos.findOne({}, {_id: 0, nome: 1, materias: 1})
+ou
+db.alunos.findOne({}, {_id: false, nome: true, materias: true})
+```
+## U - UPDATE
+![image](https://user-images.githubusercontent.com/58392536/212552452-d05005d7-29c4-49bc-951a-f675b8236a65.png)
+
+Altera primeiro documento com b: 456 com d: 555
+```
+- db.crud.updateOne({b: 456}, { $set: {d: 555}})
+```
+Altera todos documentos com a: 123
+```
+db.crud.updateMany({a: 123}, { $set: {h: 20}})
+```
+Reescreve todo documentos
+```
+db.crud.replaceOne({c: 789}, { outro: "documento"})
+```
+## D - DELETE
+![image](https://user-images.githubusercontent.com/58392536/212552490-f44006d0-1706-4f8d-a1d4-3dcb58ba1a66.png)
+
+Apaga primeiro documento com a: 123
+```
+db.crud.deleteOne({a: 123})
+```
+Apaga todos com b: 456
+```
+db.crud.deleteMany({b: 456})
+```
