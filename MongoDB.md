@@ -195,3 +195,69 @@ Apaga todos com b: 456
 ```
 db.crud.deleteMany({b: 456})
 ```
+
+# RELACIONAMENTOS
+MER | DER
+:------:|:-------:
+M - Modelo | D - Diagrama
+E - Entidade |E - Entidade
+R - Relacionamento | R - Relacionamento
+
+## 1:1
+![image](https://user-images.githubusercontent.com/58392536/212570507-94e84114-896f-4249-8e3f-18c49bbce705.png)
+
+- Referência
+```
+{								
+	"_id": 1,
+	"cpf": "12345678",
+	"nome": "João",	
+	"cidade": "São Paulo",
+	"carteirinha_id": 8	
+}
+{
+	"_id": 8,
+	"turma": "220A",
+	"ra": 1245
+}
+```
+- Embedded document
+```
+{
+	"_id": 1,
+	"cpf": "12345678",
+	"nome": "João",
+	"cidade": "São Paulo",
+	"carteirinha": {
+		"_id": 8,
+		"turma": "220A",
+		"ra": 1245
+	}
+}
+```
+
+# 1 : N
+![image](https://user-images.githubusercontent.com/58392536/212571761-f22701e6-aa1a-423a-98ad-a02a48fe2aa1.png)
+
+- Embedded document
+```
+{
+    "_id": 3,
+    "meta": 4000,
+    "nome": "Vendas",
+    "funcionarios": [
+        {
+            "_id": 8,
+            "salario": 1400,
+            "turno": "tarde",
+            "cargo": "vendedor"
+        },
+        {
+            "_id": 12,
+            "salario": 1600,
+            "turno": "noite",
+            "cargo": "vendedor"
+        }
+    ]
+}
+```
